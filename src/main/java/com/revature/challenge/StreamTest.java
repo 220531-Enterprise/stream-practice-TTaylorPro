@@ -54,7 +54,13 @@ public class StreamTest {
 
         
         // Code your Solution here
-
+        Optional<Student> possiblyBob = students.stream()
+        		.filter(s -> s.getName().equals("Bob"))
+        		.findFirst();
+        
+        System.out.println(possiblyBob.isPresent() ? possiblyBob.get().getName() : "No student found");
+        
+        
         
         
         
@@ -67,9 +73,11 @@ public class StreamTest {
 
         
         // Code your Solution here
-
+        Optional<Student> s1 = students.stream()
+        		.filter(s -> s.getAddress().getZipcode().equals("1235"))
+        		.findFirst();
         
-        
+        System.out.println(s1.isPresent() ?  s1.get().getName() : "No student found.");
         
         
         /****************************************************************************
@@ -80,9 +88,16 @@ public class StreamTest {
         
         // Code your Solution here
 
+        List<Student> studentsWith3333 = students.stream()
+        		.filter(s -> s.getMobileNumbers()
+        				.stream()
+        				.anyMatch(num -> num.getNumber().equals("3333")))
+        		.collect(Collectors.toList());
+        
+        studentsWith3333.forEach(s -> System.out.println(s.getName()));
         
         
-        
+       
         
         /***************************************************************************
          (4) Get all student having mobile number "1233" and "1234" and print their
@@ -92,8 +107,13 @@ public class StreamTest {
         
         // Code your Solution here
         
+        List<Student> studentsWith1233Or1234 = students.stream()
+        		.filter(s -> s.getMobileNumbers()
+        				.stream()
+        				.anyMatch(num -> num.getNumber().equals("1233") || num.getNumber().equals("1234")))
+        		.collect(Collectors.toList());
         
-        
+        studentsWith1233Or1234.forEach(s -> System.out.println(s.getName()));
         
         
         /***************************************************************************
@@ -117,7 +137,12 @@ public class StreamTest {
         
         // Code your Solution here, don't touch the code above
  
-
+        List<Student> studentList = tmpStudents.stream().map(temp ->{
+        	Student obj = new Student(temp.name, temp.age, temp.address, temp.mobileNumbers);
+        	return obj;
+        }).collect(Collectors.toList());
+        		
+        System.out.println(studentList);		
         
         
         
